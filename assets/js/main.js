@@ -15,19 +15,20 @@ Aggiungere una select accanto al bottone di generazione, che fornisca una scelta
 /*
 Scompongo esercizio
 1- Creazioni variabili
-    -Griglia :  mi servirà per mettere i quadrati all'interno
+    -Griglia :  mi servirà per mettere i quadrati all'interno ✅
     -DimGriglia : per stabilire la dimensione griglia(Bonus)
     -Play: per aggiungere funzione di start al click
-    -array bombe : per inserigli le bombe generate random da una funzione
+    -array bombe : per inserigli le bombe generate random da una funzione ✅
     -Punti: per stabilire il punteggio
     -PuntiToWin : per stabilire quando si vince
 
 2- Creazione funzioni
-    - per creare quadrati
-    - per stabilire difficoltà e di conseguenza quanti quadrati generare
+    - per creare quadrati✅
+    - per stabilire difficoltà e di conseguenza quanti quadrati generare (bonus)
     - per stabilire l'inizio
     - per stabilire la fine
-    - per generare bombe
+    - per generare bombe ✅
+    -per generare una classe diversa se è bomba o no ( esempio class "bomb" e classe "active") ✅
     
 */
 
@@ -55,15 +56,42 @@ function createSquare(num){ // setto un parametro generico che mi servirà per i
 // funzione per generare la griglia e appendere dentro i quadrati usando la funzione createSquare
 function generateGrid(){
 
+    arrayBomb = generateBomb(); // mi ritorna return bombs (ovvero l'array con 16 numeri generati random)
+    console.log(arrayBomb);
+
     for( i = 1; i <= 100; i++ ) {
 
         let square = createSquare(i);
-        square.addEventListener('click', function(){
-            this.classList.add('azure');
+
+        //Aggiungi evento al click in base alla tipologia ( bomba oppure no)
+        if ( arrayBomb.includes(i)){
+            square.addEventListener('click', function(){
+                this.classList.add('bomb');
+            })
+        }
+        else{
+            square.addEventListener('click', function(){
+                this.classList.add('active');
         })
-        griglia.append(square);
+        }
+        griglia.append(square);    
 
     }
 }
 
 generateGrid();
+
+// Funzione per generare 16 bombe
+function generateBomb(){
+    let bombs = []; // creo array dove inserire i numeri generati
+    let bomb; // creo variabile con cui genero i numeri e che mi servirà a inserirli nell array bombs
+    for(let x = 0; x < 16; x++ ){ // ciclo che gira per 16 volte
+        bomb = Math.floor(Math.random() * 100) + 1; // genero numeri 
+        bombs.push(bomb); // inserisco variabile bomb (con cui genera numeri per 16 volte) all'interno del array bombs
+    } 
+    return bombs; //al richiamo della funzione mi ritornerà bombs con 16 numeri genreati randomicamente
+}
+
+/*
+Stabilire la fine del gioco
+*/
