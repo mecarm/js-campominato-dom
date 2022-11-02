@@ -11,3 +11,59 @@ Aggiungere una select accanto al bottone di generazione, che fornisca una scelta
 - difficoltà 2 ⇒ 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
 - difficoltà 3 ⇒ 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
 */
+
+/*
+Scompongo esercizio
+1- Creazioni variabili
+    -Griglia :  mi servirà per mettere i quadrati all'interno
+    -DimGriglia : per stabilire la dimensione griglia(Bonus)
+    -Play: per aggiungere funzione di start al click
+    -array bombe : per inserigli le bombe generate random da una funzione
+    -Punti: per stabilire il punteggio
+    -PuntiToWin : per stabilire quando si vince
+
+2- Creazione funzioni
+    - per creare quadrati
+    - per stabilire difficoltà e di conseguenza quanti quadrati generare
+    - per stabilire l'inizio
+    - per stabilire la fine
+    - per generare bombe
+    
+*/
+
+//Aggiungo variabile griglia e dimensione griglia
+const griglia = document.getElementById('griglia');
+let grigliaDim = 0;
+
+// Aggiungo pulsante play con function start al click
+const play = document.getElementById('play');
+// play.addEventListener('click', start);
+
+//Aggiungo variabile punti e array bombe
+let arrayBomb = [];
+let punti;
+let minPuntiToWin;
+
+//Funzione per generare quadrati
+function createSquare(num){ // setto un parametro generico che mi servirà per inserire un testo nel div.
+    const div = document.createElement('div');
+    div.classList.add('square');
+    div.innerText = num ; // inserisco il parametro nel testo del div 
+    return div;
+}
+
+// funzione per generare la griglia e appendere dentro i quadrati usando la funzione createSquare
+function generateGrid(){
+
+    for( i = 1; i <= 100; i++ ) {
+
+        let square = createSquare(i);
+        square.addEventListener('click', function(){
+            this.classList.add('azure');
+        })
+        griglia.append(square);
+
+    }
+}
+
+generateGrid();
