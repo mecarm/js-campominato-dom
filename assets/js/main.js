@@ -38,11 +38,13 @@ let grigliaDim = 0;
 
 // Aggiungo pulsante play con function start al click
 const play = document.getElementById('play');
-// play.addEventListener('click', start);
+// play.addEventListener('click', start(){
+
+
 
 //Aggiungo variabile punti e array bombe
 let arrayBomb = [];
-let punti;
+let punti = 0;
 let minPuntiToWin;
 
 //Funzione per generare quadrati
@@ -59,7 +61,7 @@ function generateGrid(){
     arrayBomb = generateBomb(); // mi ritorna return bombs (ovvero l'array con 16 numeri generati random)
     console.log(arrayBomb);
 
-    for( i = 1; i <= 100; i++ ) {
+    for( let i = 1; i <= 100; i++ ) {
 
         let square = createSquare(i);
 
@@ -67,15 +69,22 @@ function generateGrid(){
         if ( arrayBomb.includes(i)){
             square.addEventListener('click', function(){
                 this.classList.add('bomb');
+                this.innerText = '💣';
+                alert('Hai perso');
+                revealBomb();
             })
         }
         else{
             square.addEventListener('click', function(){
-                this.classList.add('active');
+                if (!this.classList.contains('active')){
+                    this.classList.add('active');
+                    punti ++ ;
+                    console.log(punti);
+                    document.getElementById('punteggio').innerText = `Il tuo punteggio è : ${punti}`
+                }
         })
         }
         griglia.append(square);    
-
     }
 }
 
@@ -83,15 +92,26 @@ generateGrid();
 
 // Funzione per generare 16 bombe
 function generateBomb(){
-    let bombs = []; // creo array dove inserire i numeri generati
-    let bomb; // creo variabile con cui genero i numeri e che mi servirà a inserirli nell array bombs
-    for(let x = 0; x < 16; x++ ){ // ciclo che gira per 16 volte
-        bomb = Math.floor(Math.random() * 100) + 1; // genero numeri 
-        bombs.push(bomb); // inserisco variabile bomb (con cui genera numeri per 16 volte) all'interno del array bombs
+    let bombs = []; 
+    let bomb; 
+    let x = 0;
+    while( x < 16 ){ 
+        bomb = Math.floor(Math.random() * 100) + 1; 
+        if ( !bombs.includes(bomb) ) {
+            x++;
+            bombs.push(bomb); 
+        }
+        
     } 
-    return bombs; //al richiamo della funzione mi ritornerà bombs con 16 numeri genreati randomicamente
+    return bombs; 
 }
 
-/*
-Stabilire la fine del gioco
-*/
+
+//Stabilire una funzione che rivela i numeri 
+function revealBomb(){
+    arrayBomb = generateBomb();
+    for ( i = 0; i < arrayBomb.lenght; i++)
+    if ( arrayBomb.includes(i)){
+        square.classList.add('bomb');
+    }
+}
